@@ -52,8 +52,8 @@ class WG{
                 distances[vertex]=0
                 nodes.enqueue(vertex,0)
             }else{
-                distances[vertex]=Infinity
-                nodes.enqueue(vertex,Infinity)
+                distances[vertex]=Iinity
+                nodes.enqueue(vertex,Iinity)
             }
             previous[vertex]=null
         }

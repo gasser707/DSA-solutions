@@ -468,7 +468,7 @@ function stringifyNumbers(obj) {
 //     test: [],
 //     data: {
 //         val: 4,
-//         info: {
+//         Io: {
 //             isRight: true,
 //             random: 66
 //         }
@@ -498,9 +498,9 @@ function collectStrings(obj) {
 //     data: {
 //         val: {
 //             thing: {
-//                 info: "bar",
-//                 moreInfo: {
-//                     evenMoreInfo: {
+//                 Io: "bar",
+//                 moreIo: {
+//                     evenMoreIo: {
 //                         weMadeIt: "baz"
 //                     }
 //                 }

@@ -363,7 +363,6 @@ function countIslands(arr) {
 
         // let seen = {}
         let [i, j] = start
-        let result = [arr[i][j]]
 
         arr[i][j] = "x"
         let queue = [[i, j]]
@@ -372,40 +371,36 @@ function countIslands(arr) {
             let [i, j] = queue.shift()
 
             //going up
-            if (i - 1 >= 0 && arr[i - 1][j] === 1 ) {
+            if (i - 1 >= 0 && arr[i - 1][j] === 1) {
                 queue.push([i - 1, j])
-                result.push(arr[i - 1][j])
                 arr[i - 1][j] = "x"
             }
             //going right
             if (j + 1 < arr[0].length && arr[i][j + 1] === 1) {
                 queue.push([i, j + 1])
-                result.push(arr[i][j + 1])
                 arr[i][j + 1] = "x"
             }
             //going down
-            if (i + 1 < arr.length && arr[i + 1][j] === 1 ) {
+            if (i + 1 < arr.length && arr[i + 1][j] === 1) {
                 queue.push([i + 1, j])
-                result.push(arr[i + 1][j])
                 arr[i + 1][j] = "x"
             }
             //going left
             if (j - 1 >= 0 && arr[i][j - 1] === 1) {
                 queue.push([i, j - 1])
-                result.push(arr[i][j - 1])
                 arr[i][j - 1] = "x"
             }
-        
+
         }
         count++
     }
 
 
 
-    for (let i=0; i<arr.length; i++) {
-       for(let j=0; j<arr[0].length; j++){
-            if(arr[i][j]===1) helper([i,j])
-       }
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arr[0].length; j++) {
+            if (arr[i][j] === 1) helper([i, j])
+        }
 
     }
 
@@ -413,6 +408,189 @@ function countIslands(arr) {
 
 }
 
-
 // console.log(countIslands([[1, 1, 1, 1, 0], [1, 1, 0, 1, 0], [1, 1, 0, 0, 1], [0, 0, 0, 1, 1]]))
 // console.log(countIslands([[0, 1, 0, 1, 0], [1, 0, 1, 0, 1], [0, 1, 1, 1, 0], [1, 0, 1, 0, 1]]))
+
+
+function rotten_oranges(arr) {
+    let temp = 0
+    let rotten = []
+
+    let helper = (queue) => {
+
+        while (queue.length) {
+            let x = queue.length;
+
+            for (let k = 0; k < x; k++) {
+                let [i, j, time] = queue.shift()
+                temp = Math.max(temp, time)
+                //going up
+                if (i - 1 >= 0 && arr[i - 1][j] === 1) {
+                    queue.push([i - 1, j, time + 1])
+                    arr[i - 1][j] = 2
+                }
+                //going right
+                if (j + 1 < arr[0].length && arr[i][j + 1] === 1) {
+                    queue.push([i, j + 1, time + 1])
+                    arr[i][j + 1] = 2
+                }
+                //going down
+                if (i + 1 < arr.length && arr[i + 1][j] === 1) {
+                    queue.push([i + 1, j, time + 1])
+                    arr[i + 1][j] = 2
+                }
+                //going left
+                if (j - 1 >= 0 && arr[i][j - 1] === 1) {
+                    queue.push([i, j - 1, time + 1])
+                    arr[i][j - 1] = 2
+                }
+            }
+        }
+    }
+
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arr[0].length; j++) {
+            if (arr[i][j] === 2) {
+                // helper([i, j,0])
+                rotten.push([i, j, 0])
+            }
+        }
+    }
+
+    helper(rotten)
+
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arr[0].length; j++) {
+            if (arr[i][j] === 1) return -1
+        }
+    }
+
+    return temp
+
+}
+// console.log(rotten_oranges([[2, 1, 1, 0, 0], [1, 1, 1, 0, 0], [0, 1, 1, 1, 1], [0, 1, 0, 0, 1]]))
+// console.log(rotten_oranges([[1, 1, 0, 0, 0], [2, 1, 0, 0, 0], [0, 0, 0, 1, 2], [0, 0, 1, 0, 1]]))
+// console.log(rotten_oranges([[2, 1, 1], [1, 1, 0], [0, 1, 1]]))
+// console.log(rotten_oranges([[0, 2]]))
+// console.log(rotten_oranges([[2, 1, 1], [1, 1, 1], [0, 1, 2]]))
+
+
+function wallsAndGates(arr) {
+
+    let getPossibleMoves = (i, j) => {
+        let poss = []
+
+        if (i - 1 >= 0 && arr[i - 1][j] !== -1) {
+            poss.push([i - 1, j])
+        }
+        //going right
+        if (j + 1 < arr[0].length && arr[i][j + 1] !== -1) {
+            poss.push([i, j + 1])
+        }
+        //going down
+        if (i + 1 < arr.length && arr[i + 1][j] !== -1) {
+            poss.push([i + 1, j])
+        }
+        //going left
+        if (j - 1 >= 0 && arr[i][j - 1] !== -1) {
+            poss.push([i, j - 1])
+        }
+
+        return poss
+    }
+
+
+    let helper = (current, before) => {
+        let [i, j] = current
+        let [m, n] = before
+
+        if (arr[i][j] !== -1 && arr[i][j] !== "I") {
+            return arr[i][j]
+
+        } else if (arr[i][j] === "I") {
+            let moves = getPossibleMoves(i, j)
+            moves = moves.filter(x => !(x[0] == m && x[1] == n))
+
+            if (moves.length) {
+                let res = []
+                for (let k = 0; k < moves.length; k++) {
+                    res.push(helper(moves[k], [i, j]))
+                }
+                return 1 + Math.min(...res)
+
+            } else {
+                return Number.MAX_SAFE_INTEGER
+            }
+        }
+    }
+
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arr.length; j++) {
+            arr[i][j] = helper([i, j], []) || arr[i][j]
+        }
+    }
+
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arr.length; j++) {
+            if (arr[i][j] === Number.MAX_SAFE_INTEGER) {
+                arr[i][j] = "I"
+            }
+        }
+    }
+
+    return arr
+}
+
+// console.log(wallsAndGates([["I", -1, 0, "I"], ["I", "I", "I", -1], ["I", -1, "I", -1], [0, -1, "I", "I"]]))
+// console.log(wallsAndGates([["I", -1, 0, "I"], [-1, "I", "I", -1], ["I", -1, "I", -1], [0, -1, "I", "I"]]))
+
+
+function wallsAndGatesDFS(arr) {
+
+    let helper = (i, j, step) => {
+
+        //going up
+        if (i - 1 >= 0 && arr[i - 1][j] !== -1 && arr[i - 1][j] > step ) {
+            arr[i - 1][j] = step
+            helper(i - 1, j, step + 1)
+        }
+        //going right
+        if (j + 1 < arr[0].length && arr[i][j + 1] !== -1 && arr[i][j + 1] > step ) {
+            arr[i][j + 1] =step
+            helper(i, j + 1, step + 1)
+        }
+        //going down
+        if (i + 1 < arr.length && arr[i + 1][j] !== -1 && arr[i + 1][j]  > step) {
+            arr[i + 1][j] = step
+            helper(i + 1, j, step + 1)
+        }
+        //going left
+        if (j - 1 >= 0 && arr[i][j - 1] !== -1 && arr[i][j - 1]  > step) {
+            arr[i][j - 1] = step
+            helper(i, j - 1, step + 1)
+        }
+    }
+
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arr[0].length; j++) {
+            if (arr[i][j] === "I") {
+                arr[i][j] = Number.MAX_SAFE_INTEGER
+            }
+        }
+    }
+
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arr[0].length; j++) {
+            if (arr[i][j] === 0) {
+                helper(i, j, 1)
+            }
+        }
+    }
+
+    return arr
+
+}
+
+// console.log(wallsAndGatesDFS([["I", -1, 0, "I"], ["I", "I", "I", -1], ["I", -1, "I", -1], [0, -1, "I", "I"]]))
+// console.log(wallsAndGates([["I", -1, 0, "I"], [-1, "I", "I", -1], ["I", -1, "I", -1], [0, -1, "I", "I"]]))
+
