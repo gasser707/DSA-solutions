@@ -44,7 +44,7 @@ class Graph {
     DFS(start) {
         let list = this.adjacencyList
         let visited = {}
-        let result =[]
+        let result = []
 
         function helper(v) {
             if (!list[v]) {
@@ -58,56 +58,52 @@ class Graph {
                 if (!visited[x])
                     helper(x)
             }
-
         }
-
-
         helper(start)
         return result
-
-
     }
-    I_DFS(start){
-        let current=start
-        let visited={}
-        let stack=[]
-        let result=[]
+
+    I_DFS(start) {
+        let current = start
+        let visited = {}
+        let stack = []
+        let result = []
 
         stack.push(current)
-        visited[current]=true
-        while(stack.length!==0){
+        visited[current] = true
+        while (stack.length !== 0) {
 
-            current= stack.pop()
-            
+            current = stack.pop()
+
             result.push(current)
-            
-            for(let x of this.adjacencyList[current]){
-                if(!visited[x]){
-                    visited[x]=true
+
+            for (let x of this.adjacencyList[current]) {
+                if (!visited[x]) {
+                    visited[x] = true
                     stack.push(x)
                 }
 
             }
 
-            
-           
+
+
         }
         return result
     }
 
-    BFS(start){
-        let current=start
-        let visited={}
-        let queue=[]
-        let result=[]
+    BFS(start) {
+        let current = start
+        let visited = {}
+        let queue = []
+        let result = []
 
         queue.push(current)
-        visited[current]=true
-        while(queue.length!==0){
-            
-            for(let x of this.adjacencyList[current]){
-                if(!visited[x]){
-                    visited[x]=true
+        visited[current] = true
+        while (queue.length !== 0) {
+
+            for (let x of this.adjacencyList[current]) {
+                if (!visited[x]) {
+                    visited[x] = true
                     queue.push(x)
                 }
 
@@ -115,8 +111,8 @@ class Graph {
 
             result.push(queue.shift())
 
-            current=queue[0]
-           
+            current = queue[0]
+
         }
         return result
     }

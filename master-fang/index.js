@@ -278,7 +278,6 @@ function dfs_2dArr(arr) {
     let helper = (arr, i, j) => {
         result.push(arr[i][j])
         arr[i][j] = "x"
-        // seen[i] ? seen[i][j] = true : seen[i]= {[j]: true}
 
         //going up
         if (i - 1 >= 0 && arr[i - 1][j] !== "x") {
@@ -550,22 +549,22 @@ function wallsAndGatesDFS(arr) {
     let helper = (i, j, step) => {
 
         //going up
-        if (i - 1 >= 0 && arr[i - 1][j] !== -1 && arr[i - 1][j] > step ) {
+        if (i - 1 >= 0 && arr[i - 1][j] !== -1 && arr[i - 1][j] > step) {
             arr[i - 1][j] = step
             helper(i - 1, j, step + 1)
         }
         //going right
-        if (j + 1 < arr[0].length && arr[i][j + 1] !== -1 && arr[i][j + 1] > step ) {
-            arr[i][j + 1] =step
+        if (j + 1 < arr[0].length && arr[i][j + 1] !== -1 && arr[i][j + 1] > step) {
+            arr[i][j + 1] = step
             helper(i, j + 1, step + 1)
         }
         //going down
-        if (i + 1 < arr.length && arr[i + 1][j] !== -1 && arr[i + 1][j]  > step) {
+        if (i + 1 < arr.length && arr[i + 1][j] !== -1 && arr[i + 1][j] > step) {
             arr[i + 1][j] = step
             helper(i + 1, j, step + 1)
         }
         //going left
-        if (j - 1 >= 0 && arr[i][j - 1] !== -1 && arr[i][j - 1]  > step) {
+        if (j - 1 >= 0 && arr[i][j - 1] !== -1 && arr[i][j - 1] > step) {
             arr[i][j - 1] = step
             helper(i, j - 1, step + 1)
         }
@@ -594,3 +593,26 @@ function wallsAndGatesDFS(arr) {
 // console.log(wallsAndGatesDFS([["I", -1, 0, "I"], ["I", "I", "I", -1], ["I", -1, "I", -1], [0, -1, "I", "I"]]))
 // console.log(wallsAndGates([["I", -1, 0, "I"], [-1, "I", "I", -1], ["I", -1, "I", -1], [0, -1, "I", "I"]]))
 
+
+function climbingStairs(cost) {
+
+    let record = {}
+    let helper = (i) => {
+        if (record[i]) {
+            return record[i]
+        }
+        if (i >= cost.length) {
+            record[i] = 0
+            return 0
+        }
+
+        let res = cost[i] + Math.min(helper(i + 1), helper(i + 2))
+        record[i] = res
+        return res
+    }
+    const x =  Math.min(helper(0), helper(1))
+    return x
+}
+
+
+console.log(climbingStairs([10, 15, 30]))
